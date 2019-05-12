@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
 import { Steps, Row, Col, Button, message, Form, InputNumber, Select, Typography, Divider } from 'antd';
+import { history } from './history';
 
 const {Title, Paragraph, Text} = Typography;
 
@@ -35,8 +36,8 @@ class App extends Component {
         current: 0,
         showSubmit: false,
         enableBack: false,
-        validateNumberStatus: true,
-        validateOptionStatus: true,
+        validateNumberStatus: 'success',
+        validateOptionStatus: 'success',
         amount: 5000,
         selectedItems: [],
     };
@@ -81,6 +82,8 @@ class App extends Component {
     handleSubmit = () => {
         this.setState({current: 3});
         message.info('Fetching Results');
+        history.push('/results');
+
     }
 
 
@@ -97,6 +100,7 @@ class App extends Component {
 
     render() {
         const {selectedItems} = this.state;
+        const formatedSelectedItems = selectedItems.join(" & ");
         const filteredOptions = OPTIONS.filter(o => !selectedItems.includes(o));
 
 
@@ -106,90 +110,94 @@ class App extends Component {
                     <Typography>
                         <Title level={2}>Stock Portfolio Suggestion Engine</Title>
                         <Divider/>
-                        <Row>
-                            <Col span={8}>
-                                <div className="stepsClass">
-                                    <Steps direction="vertical" size="small" current={this.state.current}>
-                                        <Step title="Investment Amount" description="Investment Amount (in $)"/>
-                                        <Step title="Choose Investment Strategy"
-                                              description="Choose upto 2 Strategies"/>
-                                        <Step title="Confirm" description="Check Input"/>
-                                    </Steps>
-                                </div>
-                            </Col>
-                            <Col span={16}>
-                                <div className="contentClass">
-                                    <Form {...formItemLayout}>
-                                        {(this.state.current === 0 &&
-                                            <div>
-                                                <Form.Item
-                                                    validateStatus={this.state.validateNumberStatus}
-                                                    help="Amount should be greater than $5000"
-                                                >
-                                                    <InputNumber placeholder="Enter Amount"
-                                                                 defaultValue={5000}
-                                                                 value={this.state.amount}
-                                                                 formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                                 parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                                                                 style={{width: '40%'}}
-                                                                 onChange={this.handleNumberChange}/>
-                                                </Form.Item>
-                                            </div>)
-                                        || (this.state.current === 1 &&
-                                            <div>
-                                                <Form.Item
-                                                    help="Pick one or two Investment strategies"
-                                                    validateStatus={this.state.validateOptionStatus}
-                                                >
-                                                    <Select
-                                                        mode="multiple"
-                                                        placeholder="Investment strategies"
-                                                        value={selectedItems}
-                                                        onChange={this.handleOptionChange}
-                                                        style={{width: '40%'}}
-                                                    >
-                                                        {filteredOptions.map(item => (
-                                                            <Select.Option key={item} value={item}>
-                                                                {item}
-                                                            </Select.Option>
-                                                        ))}
-                                                    </Select>
-                                                </Form.Item>
-                                            </div>)
-                                        || (this.state.current === 2 &&
-                                            <div>
-
-                                                {this.state.amount}
-                                                {selectedItems}
-                                            </div>)
-                                        }
-                                    </Form>
-                                </div>
-                            </Col>
-                        </Row>
-
-                        <Row>
-                            <Col span={6} offset={10}>
-                                {!this.state.enableBack &&
-                                <Button onClick={this.handleBack} style={{marginRight: 20}} disabled>Back</Button>
-                                }
-
-                                {this.state.enableBack &&
-                                <Button onClick={this.handleBack} style={{marginRight: 20}}>Back</Button>
-                                }
-
-                                {!this.state.showSubmit &&
-                                <Button type="primary" onClick={this.handleNext}>Next</Button>
-                                }
-
-                                {this.state.showSubmit &&
-                                <Button type="primary" onClick={this.handleSubmit}>Submit</Button>
-                                }
-
-                            </Col>
-                        </Row>
-
                     </Typography>
+                    <Row>
+                        <Col span={8}>
+                            <div className="stepsClass">
+                                <Steps direction="vertical" size="small" current={this.state.current}>
+                                    <Step title="Investment Amount" description="Investment Amount (in $)"/>
+                                    <Step title="Choose Investment Strategy"
+                                          description="Choose upto 2 Strategies"/>
+                                    <Step title="Confirm" description="Check Input"/>
+                                </Steps>
+                            </div>
+                        </Col>
+                        <Col span={16}>
+                            <div className="contentClass">
+                                <Form {...formItemLayout}>
+                                    {(this.state.current === 0 &&
+                                        <div>
+                                            <Form.Item
+                                                validateStatus={this.state.validateNumberStatus}
+                                                help="Amount should be greater than $5000"
+                                                style={{width: '100%'}}
+                                            >
+                                                <InputNumber placeholder="Enter Amount"
+                                                             defaultValue={5000}
+                                                             value={this.state.amount}
+                                                             formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                                                             style={{width: '100%'}}
+                                                             onChange={this.handleNumberChange}/>
+                                            </Form.Item>
+                                        </div>)
+                                    || (this.state.current === 1 &&
+                                        <div>
+                                            <Form.Item
+                                                help="Pick one or two Investment strategies"
+                                                validateStatus={this.state.validateOptionStatus}
+                                                style={{width: '100%'}}
+                                            >
+                                                <Select
+                                                    mode="multiple"
+                                                    placeholder="Investment strategies"
+                                                    value={selectedItems}
+                                                    onChange={this.handleOptionChange}
+                                                    style={{width: '100%'}}
+                                                >
+                                                    {filteredOptions.map(item => (
+                                                        <Select.Option key={item} value={item}>
+                                                            {item}
+                                                        </Select.Option>
+                                                    ))}
+                                                </Select>
+                                            </Form.Item>
+                                        </div>)
+                                    || (this.state.current === 2 &&
+                                        <div>
+                                            <Text strong>Amount: </Text> <Text>{this.state.amount}</Text>
+                                            <br/>
+                                            <Text strong>Investing
+                                                Strategies: </Text><Text>{formatedSelectedItems}</Text>
+                                        </div>)
+                                    }
+                                </Form>
+                            </div>
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col span={6} offset={10}>
+                            {!this.state.enableBack &&
+                            <Button onClick={this.handleBack} style={{marginRight: 20}} disabled>Back</Button>
+                            }
+
+                            {this.state.enableBack &&
+                            <Button onClick={this.handleBack} style={{marginRight: 20}}>Back</Button>
+                            }
+
+                            {!this.state.showSubmit &&
+                            <Button type="primary" onClick={this.handleNext}>Next</Button>
+                            }
+
+                            {this.state.showSubmit &&
+                            <Button type="primary" onClick={this.handleSubmit}>Submit</Button>
+                            }
+
+                        </Col>
+                    </Row>
+
+
                 </div>
             </div>
         );
