@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Steps, Row, Col, Button, message, Form, InputNumber, Select, Typography, Divider } from 'antd';
+import { Typography, Divider } from 'antd';
 
 const queryString = require('query-string');
 
@@ -17,6 +17,8 @@ class ResultApp extends Component {
         const values = queryString.parse(this.props.location.search)
 
         this.setState({amount: values.amount, strategyList: values.strategy})
+
+        //API call to server to fetch information
 
     }
 
