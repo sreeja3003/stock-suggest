@@ -4,7 +4,10 @@ import 'antd/dist/antd.css';
 import { Steps, Row, Col, Button, message, Form, InputNumber, Select, Typography, Divider } from 'antd';
 import { history } from './history';
 
+const queryString = require('query-string');
+
 const {Title, Paragraph, Text} = Typography;
+
 
 const Step = Steps.Step;
 const OPTIONS = ['Ethical Investing', 'Growth Investing', 'Index Investing', 'Quality Investing', 'Value Investing'];
@@ -82,7 +85,14 @@ class App extends Component {
     handleSubmit = () => {
         this.setState({current: 3});
         message.info('Fetching Results');
-        history.push('/results');
+        let query = {};
+        query.amount = this.state.amount;
+        query.strategy = this.state.selectedItems;
+
+        const stringified = queryString.stringify(query);
+
+
+        history.push('/results?' + stringified);
 
     }
 
@@ -108,7 +118,11 @@ class App extends Component {
             <div className="App">
                 <div className="box effect1">
                     <Typography>
-                        <Title level={2}>Stock Portfolio Suggestion Engine</Title>
+                        <div style={{textAlign: 'center'}}>
+                            <a href="/">
+                                <Title level={3}>Stock Portfolio Suggestion Engine</Title>
+                            </a>
+                        </div>
                         <Divider/>
                     </Typography>
                     <Row>

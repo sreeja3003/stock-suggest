@@ -15,7 +15,7 @@ class RouteApp extends Component {
                 <Router history={history}>
                     <Switch>
                         <Route exact path="/" component={App}/>
-                        <Route exact path="/results" component={ResultApp}/>
+                        <Route path="/results" component={ResultApp}/>
                     </Switch>
                 </Router>
 
