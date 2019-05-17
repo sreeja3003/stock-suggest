@@ -62,3 +62,4 @@ typings/
 frontend/package-lock.json
 backend/.idea/*
 .DS_Store
+*.pyc

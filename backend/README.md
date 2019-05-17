@@ -17,7 +17,7 @@ The Flask application is ran with a localhost server (IP address 127.0.0.1:5000)
 Flask first needs to be told how to import the application, by setting the ```FLASK_APP``` environmental variable:
 
 ```
-$ export FLASK_APP=stock-portfolio-suggestion-web-app.py
+$ export FLASK_APP=stock-suggestion-server.py
 ```
 
 On Microsoft Windows, use ```set``` instead of ```export``` in the command above.
