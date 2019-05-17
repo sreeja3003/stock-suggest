@@ -3,14 +3,15 @@ import os
 import requests
 import json
 from flask import Flask, request, Response
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
+
 
 
 
 # Define an instance of Flask object
 app = Flask(__name__)
-CORS(app, allow_headers='Content-Type')
-
+CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 """ Stocks for investment strategies"""
 
@@ -38,6 +39,7 @@ def get_stock_quote(stock_list):
     return stock_quote
 
 @app.route('/getData', methods=['POST'])
+@cross_origin(origin='*')
 def return_data():
     Strategies = request.json['Strategies']
     Amount = request.json['Amount']
@@ -68,7 +70,9 @@ def return_data():
 
     # get_stock_quote(value)
     dict1 = {"strategiesResponse": response, "amountResponse": responseAmount}
-    return Response(json.dumps(dict1), mimetype='application/json')
+    response=Response(json.dumps(dict1), mimetype='application/json')
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
 
 
 if __name__ == "__main__":
