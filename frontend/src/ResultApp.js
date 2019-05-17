@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Typography, Divider } from 'antd';
+import { Typography, Divider, Spin, Row, Col, Card } from 'antd';
 import axios from 'axios';
+import StockCard from './StockCard'
 
 const queryString = require('query-string');
 
@@ -11,6 +12,9 @@ class ResultApp extends Component {
     state = {
         amount: 0,
         strategyList: [],
+        loading: true,
+        strategyResponse: [],
+        amountResponse: [],
     };
 
 
@@ -21,24 +25,37 @@ class ResultApp extends Component {
 
         //API call to server to fetch information
 
-        let postBody= {}
+        let postBody = {}
         postBody.Amount = parseInt(values.amount);
         postBody.Strategies = [];
-        if (values.strategy.length === 2){
+        if (values.strategy.length === 2) {
             postBody.Strategies = [...values.strategy]
         }
-        else{
+        else {
             postBody.Strategies.push(values.strategy)
         }
 
         console.log(postBody);
 
 
-            let response = await axios.post(`https://stock-portfolio-suggession-app.herokuapp.com/getData`, postBody)
+        let response = await axios.post(`https://stock-portfolio-suggession-app.herokuapp.com/getData`, postBody)
 
-        
+
         console.log(response);
         console.log(JSON.stringify(response));
+
+        this.setState({loading: false});
+        if (response.data.strategiesResponse[1]) {
+            this.setState({strategyResponse: [...response.data.strategiesResponse[0], ...response.data.strategiesResponse[1]]});
+        }
+        else {
+            this.setState({strategyResponse: [...response.data.strategiesResponse[0]]});
+        }
+
+        this.setState({amountResponse: response.data.amountResponse});
+
+        console.log("this.state.strategyResponse");
+        console.log(this.state.strategyResponse);
 
     }
 
@@ -66,30 +83,63 @@ class ResultApp extends Component {
                         </div>
                         <Divider/>
                     </Typography>
-                    <div>
-                        <Text strong>Amount: </Text> <Text>$ {this.state.amount}</Text>
+                    <Spin tip="Loading..." spinning={this.state.loading}>
+                        <div>
+                            <Text strong>Amount: </Text> <Text>$ {this.state.amount}</Text>
 
-                        <div style={{float: 'right'}}>
-                            <Text strong>Investing Strategies: </Text><Text>{formatedSelectedItems}</Text>
+                            <div style={{float: 'right'}}>
+                                <Text strong>Investing Strategies: </Text><Text>{formatedSelectedItems}</Text>
+                            </div>
                         </div>
-                    </div>
-                    <Divider/>
-
-                    {!isSecondStrategyPresent &&
-                    <div>
-                        <Text strong>{strategyList} </Text>
-                    </div>
-                    }
-
-                    {isSecondStrategyPresent &&
-                    <div>
-                        <Text strong>{strategyList[0]} </Text>
                         <Divider/>
-                        <Text strong>{strategyList[1]} </Text>
-                    </div>
-                    }
 
+                        {!isSecondStrategyPresent &&
+                        <div>
+                            <Text strong>{strategyList} </Text>
+                            <br/>
+                            <div style={{padding: '30px'}}>
+                                <Row gutter={16}>
+                                    <StockCard data={this.state.strategyResponse[0]}
+                                               amount={this.state.amountResponse[0]}/>
+                                    <StockCard data={this.state.strategyResponse[1]}
+                                               amount={this.state.amountResponse[1]}/>
+                                    <StockCard data={this.state.strategyResponse[2]}
+                                               amount={this.state.amountResponse[2]}/>
+                                </Row>
+                            </div>
+                        </div>
+                        }
 
+                        {isSecondStrategyPresent &&
+                        <div>
+                            <Text strong>{strategyList[0]} </Text>
+                            <br/>
+                            <div style={{padding: '30px'}}>
+                                <Row gutter={16}>
+                                    <StockCard data={this.state.strategyResponse[0]}
+                                               amount={this.state.amountResponse[0]}/>
+                                    <StockCard data={this.state.strategyResponse[1]}
+                                               amount={this.state.amountResponse[1]}/>
+                                    <StockCard data={this.state.strategyResponse[2]}
+                                               amount={this.state.amountResponse[2]}/>
+                                </Row>
+                            </div>
+                            <Divider/>
+                            <Text strong>{strategyList[1]} </Text>
+                            <div style={{padding: '30px'}}>
+                                <Row gutter={16}>
+                                    <StockCard data={this.state.strategyResponse[3]}
+                                               amount={this.state.amountResponse[0]}/>
+                                    <StockCard data={this.state.strategyResponse[4]}
+                                               amount={this.state.amountResponse[1]}/>
+                                    <StockCard data={this.state.strategyResponse[5]}
+                                               amount={this.state.amountResponse[2]}/>
+                                </Row>
+                            </div>
+                        </div>
+                        }
+
+                    </Spin>
                 </div>
             </div>
         );
