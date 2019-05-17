@@ -1,14 +1,12 @@
 # Import Flask packages
 import requests
 import json
-from flask import Flask, render_template, request, Response
+from flask import Flask, request, Response
 
 
 
 # Define an instance of Flask object
-DEBUG = True
 app = Flask(__name__)
-app.config.from_object(__name__)
 
 
 """ Stocks for investment strategies"""
