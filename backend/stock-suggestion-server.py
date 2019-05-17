@@ -38,8 +38,6 @@ def get_stock_quote(stock_list):
 def return_data():
     Strategies = request.json['Strategies']
     Amount = request.json['Amount']
-    dataLength = len(Strategies)
-    print dataLength , 'Strategies'
 
     response = []
     amt1 = Amount*0.5
