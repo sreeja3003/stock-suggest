@@ -60,3 +60,5 @@ typings/
 # next.js build output
 .next
 frontend/package-lock.json
+backend/.idea/*
+.DS_Store
