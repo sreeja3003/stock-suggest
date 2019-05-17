@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Divider } from 'antd';
+import axios from 'axios';
 
 const queryString = require('query-string');
 
@@ -13,12 +14,31 @@ class ResultApp extends Component {
     };
 
 
-    componentDidMount() {
+    async componentDidMount() {
         const values = queryString.parse(this.props.location.search)
 
-        this.setState({amount: values.amount, strategyList: values.strategy})
+        this.setState({amount: parseInt(values.amount), strategyList: values.strategy})
 
         //API call to server to fetch information
+
+        let postBody= {}
+        postBody.Amount = parseInt(values.amount);
+        postBody.Strategies = [];
+        if (values.strategy.length === 2){
+            postBody.Strategies = [...values.strategy]
+        }
+        else{
+            postBody.Strategies.push(values.strategy)
+        }
+
+        console.log(postBody);
+
+
+            let response = await axios.post(`https://stock-portfolio-suggession-app.herokuapp.com/getData`, postBody)
+
+        
+        console.log(response);
+        console.log(JSON.stringify(response));
 
     }
 

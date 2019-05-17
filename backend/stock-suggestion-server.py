@@ -1,12 +1,15 @@
 # Import Flask packages
+import os
 import requests
 import json
 from flask import Flask, request, Response
+from flask_cors import CORS
 
 
 
 # Define an instance of Flask object
 app = Flask(__name__)
+CORS(app, allow_headers='Content-Type')
 
 
 """ Stocks for investment strategies"""
@@ -69,6 +72,5 @@ def return_data():
 
 
 if __name__ == "__main__":
-    # app.run()
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
