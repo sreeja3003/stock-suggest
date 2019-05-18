@@ -255,9 +255,7 @@ class App extends Component {
                 <div className="box effect1">
                     <Typography>
                         <div style={{textAlign: 'center'}}>
-                            <a href="/">
-                                <Title level={3}>Stock Portfolio Suggestion Engine</Title>
-                            </a>
+                            <Title level={3}> <a href="/">Stock Portfolio Suggestion Engine </a></Title>
                         </div>
                         <Divider/>
                     </Typography>
@@ -354,7 +352,7 @@ class App extends Component {
                         <Col>
                             <Typography>
                                 <Title level={4}> Market Overview Widget</Title>
-                               </Typography>
+                            </Typography>
                             Market Overview Widget provides a quick glance at the latest market activity across various
                             sectors.
                         </Col>

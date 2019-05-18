@@ -26,7 +26,7 @@ def get_stock_quote(stock_list):
     """Function that calls stock API for each stock to fetch stock details"""
 
     # Filter defining the data requirement
-    param_filter = '?filter=companyName,latestPrice,latestTime,change,changePercent'
+    param_filter = '?filter=symbol,companyName,latestPrice,latestTime,change,changePercent'
 
     stock_quote = []
 

@@ -77,9 +77,9 @@ class ResultApp extends Component {
                 <div className="box effect1">
                     <Typography>
                         <div style={{textAlign: 'center'}}>
-                            <a href="/">
-                                <Title level={3}>Stock Portfolio Suggestion Engine</Title>
-                            </a>
+
+                            <Title level={3}> <a href="/">Stock Portfolio Suggestion Engine </a></Title>
+
                         </div>
                         <Divider/>
                     </Typography>
@@ -95,7 +95,7 @@ class ResultApp extends Component {
 
                         {!isSecondStrategyPresent &&
                         <div>
-                            <Text strong>{strategyList} </Text>
+                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList} </Title></div>
                             <br/>
                             <div style={{padding: '30px'}}>
                                 <Row gutter={16}>
@@ -112,7 +112,7 @@ class ResultApp extends Component {
 
                         {isSecondStrategyPresent &&
                         <div>
-                            <Text strong>{strategyList[0]} </Text>
+                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[0]} </Title></div>
                             <br/>
                             <div style={{padding: '30px'}}>
                                 <Row gutter={16}>
@@ -125,7 +125,7 @@ class ResultApp extends Component {
                                 </Row>
                             </div>
                             <Divider/>
-                            <Text strong>{strategyList[1]} </Text>
+                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[1]} </Title></div>
                             <div style={{padding: '30px'}}>
                                 <Row gutter={16}>
                                     <StockCard data={this.state.strategyResponse[3]}
