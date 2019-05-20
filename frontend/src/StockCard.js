@@ -406,7 +406,7 @@ class StockCard extends Component {
                             color: iconColor,
                             fontSize: 20
                         }}/> {props.change} $
-                        <Text style={{fontSize: 10}}>( {(props.changePercent * 100).toFixed(2)}) % )</Text>
+                        <Text style={{fontSize: 10}}>( {(props.changePercent * 100).toFixed(2)} % )</Text>
                         <br/>
                         <div style={{textAlign: 'right'}}>
                             <Text style={{fontSize: 10}}>{props.latestTime} </Text>
