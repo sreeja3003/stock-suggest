@@ -4,8 +4,9 @@ Project for CmpE 285 Course Lab in the Spring 19 semester at San Jose State Univ
 ## Project Description
 Our Stock Portfolio Suggestion Engine uses investment strategies like ethical investing, value investing, growth investing, index investing, and quality investing to suggest the best investment options according to the investment amount input by the user. A detailed report of the suggested stock portfolio is presented to the user, through our simple yet elegant user interface.
 
-### App deployed at:
-https://stock-portfolio-suggession.herokuapp.com (Please reach out if the URL is not operational)
+### URL of the deployed app
+https://stock-portfolio-suggession.herokuapp.com 
+(Please reach out if the URL is not operational)
 ![](https://github.com/shreyamkela/stock-portfolio-suggestion-engine/blob/master/results-thumbnail.PNG?raw=true)
 
 ### Features
