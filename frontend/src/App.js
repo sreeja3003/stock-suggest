@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
-import { Steps, Row, Col, Button, message, Form, InputNumber, Select, Typography, Divider } from 'antd';
+import { Steps, Row, Col, Button, message, Form, InputNumber, Select, Typography, Divider, Checkbox } from 'antd';
 import { history } from './history';
 
 const queryString = require('query-string');
 
 const {Title, Paragraph, Text} = Typography;
+const CheckboxGroup = Checkbox.Group;
+
 
 
 const Step = Steps.Step;
@@ -240,7 +242,8 @@ class App extends Component {
         });
     }
 
-    handleOptionChange = selectedItems => {
+    handleOptionChange = (selectedItems) => {
+        console.log(selectedItems)
         this.setState({selectedItems});
     };
 
@@ -296,19 +299,16 @@ class App extends Component {
                                                 validateStatus={this.state.validateOptionStatus}
                                                 style={{width: '100%'}}
                                             >
-                                                <Select
-                                                    mode="multiple"
-                                                    placeholder="Investment strategies"
-                                                    value={selectedItems}
-                                                    onChange={this.handleOptionChange}
-                                                    style={{width: '100%'}}
-                                                >
-                                                    {filteredOptions.map(item => (
-                                                        <Select.Option key={item} value={item}>
+                                                <CheckboxGroup style={{ width: '100%' }} onChange={this.handleOptionChange} >
+                                                <Row>
+                                                {filteredOptions.map(item => (
+                                                        <Checkbox key={item} value={item} >
                                                             {item}
-                                                        </Select.Option>
-                                                    ))}
-                                                </Select>
+                                                        </Checkbox>
+                                                    ))}             
+                                                    </Row>
+                                                    </CheckboxGroup>
+                                        
                                             </Form.Item>
                                         </div>)
                                     || (this.state.current === 2 &&
