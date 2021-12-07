@@ -243,8 +243,9 @@ class App extends Component {
     }
 
     handleOptionChange = (selectedItems) => {
-        console.log(selectedItems)
-        this.setState({selectedItems});
+        this.setState(prevState=>({
+            selectedItems: [...prevState.selectedItems, selectedItems]
+        }));
     };
 
     render() {
@@ -297,15 +298,17 @@ class App extends Component {
                                             <Form.Item
                                                 help="Pick one or two Investment strategies"
                                                 validateStatus={this.state.validateOptionStatus}
-                                                style={{width: '100%'}}
+                                                style={{width: '120%'}}
                                             >
-                                                <CheckboxGroup style={{ width: '100%' }} onChange={this.handleOptionChange} >
+                                                <CheckboxGroup style={{ width: '150%' }} onChange={this.handleOptionChange} >
                                                 <Row>
+                                                    <Col>
                                                 {filteredOptions.map(item => (
-                                                        <Checkbox key={item} value={item} >
+                                                        <Checkbox key={item} value={item}  style={{marginLeft: '0', paddingRight: '10px'}}>
                                                             {item}
                                                         </Checkbox>
-                                                    ))}             
+                                                    ))} 
+                                                    </Col>            
                                                     </Row>
                                                     </CheckboxGroup>
                                         
