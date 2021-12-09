@@ -187,7 +187,7 @@ class App extends Component {
     handleNext = () => {
 const selected = this.state.selectedItems;
 
-if (this.state.current === 1 && selected.length > 3) {
+if (this.state.current === 1 && selected.length > 2) {
             console.log(selected.length)
             message.error('Select maximum of 2 Investment strategies');
             this.setState(({validateOptionStatus: 'error'}))
@@ -227,6 +227,7 @@ if (this.state.current === 1 && selected.length > 3) {
         message.info('Fetching Results');
         let query = {};
         query.amount = this.state.amount;
+        console.log(this.state.selectedItems)
         query.strategy = this.state.selectedItems;
 
         const stringified = queryString.stringify(query);
@@ -246,14 +247,14 @@ if (this.state.current === 1 && selected.length > 3) {
 
     handleOptionChange = (selectedItems) => {
         this.setState(prevState=>({
-            selectedItems: [selectedItems]
+            selectedItems: selectedItems
         }));
     };
 
     render() {
         const {selectedItems} = this.state;
         const formatedSelectedItems = selectedItems.join(" & ");
-        const filteredOptions = OPTIONS.filter(o => !selectedItems.includes(o));
+       // const filteredOptions = OPTIONS.filter(o => !selectedItems.includes(o));
 
 
         return (
@@ -305,7 +306,7 @@ if (this.state.current === 1 && selected.length > 3) {
                                                 <CheckboxGroup style={{ width: '150%' }} onChange={this.handleOptionChange} >
                                                 <Row>
                                                     <Col>
-                                                {filteredOptions.map(item => (
+                                                {OPTIONS.map(item => (
                                                         <Checkbox key={item} value={item}  style={{marginLeft: '0', paddingRight: '10px'}}>
                                                             {item}
                                                         </Checkbox>
