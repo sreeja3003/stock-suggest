@@ -185,8 +185,10 @@ class App extends Component {
     }
 
     handleNext = () => {
+const selected = this.state.selectedItems;
 
-        if (this.state.current === 1 && this.state.selectedItems.length > 2) {
+if (this.state.current === 1 && selected.length > 3) {
+            console.log(selected.length)
             message.error('Select maximum of 2 Investment strategies');
             this.setState(({validateOptionStatus: 'error'}))
         }
@@ -244,7 +246,7 @@ class App extends Component {
 
     handleOptionChange = (selectedItems) => {
         this.setState(prevState=>({
-            selectedItems: [...prevState.selectedItems, selectedItems]
+            selectedItems: [selectedItems]
         }));
     };
 
@@ -268,7 +270,7 @@ class App extends Component {
                             <div className="stepsClass">
                                 <Steps direction="vertical" size="small" current={this.state.current}>
                                     <Step title="Investment Amount" description="Investment Amount (in $)"/>
-                                    <Step title="Choose Investment Strategy"
+                                    <Step title="Choose  a Investment Strategy"
                                           description="Choose upto 2 Strategies"/>
                                     <Step title="Confirm" description="Check Input"/>
                                 </Steps>
