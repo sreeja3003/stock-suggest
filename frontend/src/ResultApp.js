@@ -38,11 +38,9 @@ class ResultApp extends Component {
         console.log(postBody);
 
 
-        let response = await axios.post(`https://stock-portfolio-suggession-app.herokuapp.com/getData`, postBody)
+        let response = await axios.post(`http://localhost:5000/ret_portfol_table`, postBody)
 
-
-        console.log(response);
-        console.log(JSON.stringify(response));
+        console.log(JSON.stringify(response.data));
 
         this.setState({loading: false});
         if (response.data.strategiesResponse[1]) {
