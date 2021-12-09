@@ -1,11 +1,36 @@
 import React, { Component } from 'react';
-import { Typography, Divider, Spin, Row, Col, Card } from 'antd';
+import { Typography, Divider, Spin, Row, Col, Card, Table, Space, Tag } from 'antd';
 import axios from 'axios';
 import StockCard from './StockCard'
 
 const queryString = require('query-string');
 
 const {Title, Paragraph, Text} = Typography;
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'symbol',
+        key: 'name',
+        render: text => <a>{text}</a>
+    },
+    {
+        title: 'Current Price',
+        dataIndex: 'latestPrice',
+        key: 'curr_price',
+    },
+    {
+        title: 'Allotment',
+        dataIndex: 'allot',
+        key: 'allot',
+    },
+    {
+        title: 'Total',
+        dataIndex: 'total',
+        key: 'total',
+    },
+
+];
 
 class ResultApp extends Component {
 
@@ -38,9 +63,25 @@ class ResultApp extends Component {
         console.log(postBody);
 
 
-        let response = await axios.post(`http://localhost:5000/ret_portfol_table`, postBody)
+        //let response = await axios.post(`http://localhost:5000/ret_portfol_table`, postBody)
 
-        console.log(JSON.stringify(response.data));
+        let response = {data: {
+            "strategiesResponse": [
+                [{"symbol": "MMM", "latestPrice":"100.00","allot":"6.25","total":"625.00"},
+                  {"symbol": "MSFT", "latestPrice":"100.00","allot":"11.25","total":"1125.00"},
+                  {"symbol": "BYND", "latestPrice":"100.00","allot":"7.50","total":"750.00"}
+                ],
+                [{"symbol": "NFLX", "latestPrice":"100.00","allot":"7.50","total":"750.00"},
+                  {"symbol": "GOOG", "latestPrice":"100.00","allot":"10.00","total":"1000.00"},
+                  {"symbol": "AMZN", "latestPrice":"100.00","allot":"7.50","total":"750.00"}
+                ]
+              ],
+            "amountResponse": [
+              {"Total":5000,"final_portfolio":5000},
+              {"final_portfolio":5000,"total":5000}
+            ]
+          }}
+        console.log(JSON.stringify(response.data.strategiesResponse[1]));
 
         this.setState({loading: false});
         if (response.data.strategiesResponse[1]) {
@@ -64,6 +105,7 @@ class ResultApp extends Component {
         let formatedSelectedItems;
         if (strategyList.length === 2) {
             formatedSelectedItems = strategyList.join(" & ");
+            console.log(formatedSelectedItems)
             isSecondStrategyPresent = true;
         }
         else {
@@ -132,8 +174,11 @@ class ResultApp extends Component {
                                                amount={this.state.amountResponse[1]}/>
                                     <StockCard data={this.state.strategyResponse[5]}
                                                amount={this.state.amountResponse[2]}/>
+                                            
                                 </Row>
+                            
                             </div>
+                            <Table columns ={columns} dataSource={this.state.strategyResponse} />
                         </div>
                         }
 
