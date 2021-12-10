@@ -38,7 +38,8 @@ class ResultApp extends Component {
         amount: 0,
         strategyList: [],
         loading: true,
-        strategyResponse: [],
+        strategyResponse0: [],
+        strategyResponse1: [],
         amountResponse: [],
     };
 
@@ -85,16 +86,14 @@ class ResultApp extends Component {
 
         this.setState({loading: false});
         if (response.data.strategiesResponse[1]) {
-            this.setState({strategyResponse: [...response.data.strategiesResponse[0], ...response.data.strategiesResponse[1]]});
+            this.setState({strategyResponse0: [...response.data.strategiesResponse[0]]});
+            this.setState({strategyResponse1: [...response.data.strategiesResponse[1]]});
         }
         else {
-            this.setState({strategyResponse: [...response.data.strategiesResponse[0]]});
+            this.setState({strategyResponse0: [...response.data.strategiesResponse[0]]});
         }
 
         this.setState({amountResponse: response.data.amountResponse});
-
-        console.log("this.state.strategyResponse");
-        console.log(this.state.strategyResponse);
 
     }
 
@@ -123,68 +122,15 @@ class ResultApp extends Component {
                         </div>
                         <Divider/>
                     </Typography>
-                    <Spin tip="Loading..." spinning={this.state.loading}>
-                        <div>
-                            <Text strong>Amount: </Text> <Text>$ {this.state.amount}</Text>
+                    <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[0]} </Title></div>
+                            <Table columns ={columns} dataSource={this.state.strategyResponse0} />
+                    <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[1]} </Title></div>
+                            <Table columns ={columns} dataSource={this.state.strategyResponse1} />
 
-                            <div style={{float: 'right'}}>
-                                <Text strong>Investing Strategies: </Text><Text>{formatedSelectedItems}</Text>
-                            </div>
                         </div>
-                        <Divider/>
+                    
 
-                        {!isSecondStrategyPresent &&
-                        <div>
-                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList} </Title></div>
-                            <br/>
-                            <div style={{padding: '30px'}}>
-                                <Row gutter={16}>
-                                    <StockCard data={this.state.strategyResponse[0]}
-                                               amount={this.state.amountResponse[0]}/>
-                                    <StockCard data={this.state.strategyResponse[1]}
-                                               amount={this.state.amountResponse[1]}/>
-                                    <StockCard data={this.state.strategyResponse[2]}
-                                               amount={this.state.amountResponse[2]}/>
-                                </Row>
-                            </div>
-                        </div>
-                        }
-
-                        {isSecondStrategyPresent &&
-                        <div>
-                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[0]} </Title></div>
-                            <br/>
-                            <div style={{padding: '30px'}}>
-                                <Row gutter={16}>
-                                    <StockCard data={this.state.strategyResponse[0]}
-                                               amount={this.state.amountResponse[0]}/>
-                                    <StockCard data={this.state.strategyResponse[1]}
-                                               amount={this.state.amountResponse[1]}/>
-                                    <StockCard data={this.state.strategyResponse[2]}
-                                               amount={this.state.amountResponse[2]}/>
-                                </Row>
-                            </div>
-                            <Divider/>
-                            <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[1]} </Title></div>
-                            <div style={{padding: '30px'}}>
-                                <Row gutter={16}>
-                                    <StockCard data={this.state.strategyResponse[3]}
-                                               amount={this.state.amountResponse[0]}/>
-                                    <StockCard data={this.state.strategyResponse[4]}
-                                               amount={this.state.amountResponse[1]}/>
-                                    <StockCard data={this.state.strategyResponse[5]}
-                                               amount={this.state.amountResponse[2]}/>
-                                            
-                                </Row>
-                            
-                            </div>
-                            <Table columns ={columns} dataSource={this.state.strategyResponse} />
-                        </div>
-                        }
-
-                    </Spin>
                 </div>
-            </div>
         );
     }
 }
