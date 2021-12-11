@@ -123,9 +123,9 @@ class ResultApp extends Component {
                         <Divider/>
                     </Typography>
                     <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[0]} </Title></div>
-                            <Table columns ={columns} dataSource={this.state.strategyResponse0} />
+                            <Table columns ={columns} dataSource={this.state.strategyResponse0} pagination={false}/>
                     <div style={{textAlign: 'center'}}><Title level={4}>{strategyList[1]} </Title></div>
-                            <Table columns ={columns} dataSource={this.state.strategyResponse1} />
+                            <Table columns ={columns} dataSource={this.state.strategyResponse1} pagination={false} />
 
                         </div>
                     
